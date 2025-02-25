@@ -1,0 +1,31 @@
+---
+import Layout from "@layouts/Layout.astro";
+import { ABOUT } from "@consts";
+import Container from "@components/Container.astro";
+---
+
+<Layout title={ABOUT.TITLE} description={ABOUT.DESCRIPTION}>
+  <Container>
+    <div class="space-y-16">
+      <section>
+        <article class="space-y-4">
+          <span>
+            <p>
+              I'm Joe. I'm a bioengineer focussing on biomedical computation. I
+              unwind by playing keyboard, singing, and walking in the
+              wilderness. I will be a medical student starting this fall. The
+              next 10 years of my life I'll be striving to learn how to treat
+              people in low resource environments.
+            </p>
+          </span>
+          <span class="animate">
+            <p>
+              This is where I put my art and thoughts. If I didn't put them
+              somewhere, I'd never get them organized.
+            </p>
+          </span>
+        </article>
+      </section>
+    </div>
+  </Container>
+</Layout>

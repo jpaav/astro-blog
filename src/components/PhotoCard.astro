@@ -1,0 +1,29 @@
+---
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+
+type Props = {
+  entry: CollectionEntry<"albums">;
+};
+
+const { entry } = Astro.props as {
+  entry: CollectionEntry<"albums">;
+};
+---
+
+<div class="relative w-96 h-96">
+  <a
+  href={`/${entry.collection}/${entry.id}`}
+  class="not-prose group transition-colors duration-300 ease-in-out hover:bg-black/5 hover:text-black focus-visible:bg-black/5 focus-visible:text-black dark:border-white/20 dark:hover:bg-white/5 dark:hover:text-white dark:focus-visible:bg-white/5 dark:focus-visible:text-white"
+>
+  <Image
+    class="w-96 h-96 object-cover rounded-lg"
+    src={entry.data.cover}
+    alt={entry.data.description}
+  />
+  <div class="absolute p-4 font-semibold bottom-0 right-0 text-white text-2xl">
+    {entry.data.title}
+  </div>
+</a>
+</div>
+

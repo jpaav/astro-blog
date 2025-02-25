@@ -1,0 +1,56 @@
+---
+import { type CollectionEntry, getCollection } from "astro:content";
+import Layout from "@layouts/Layout.astro";
+import Container from "@components/Container.astro";
+import PhotoCard from "@components/PhotoCard.astro";
+import { ALBUMS } from "@consts";
+import { Image } from "astro:assets";
+
+const data = (await getCollection("albums"))
+  .filter((album) => !album.data.draft)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+type Acc = {
+  [year: string]: CollectionEntry<"albums">[];
+};
+
+const albums = data.reduce((acc: Acc, album) => {
+  const year = album.data.date.getFullYear().toString();
+  if (!acc[year]) {
+    acc[year] = [];
+  }
+  acc[year].push(album);
+  return acc;
+}, {});
+
+const years = Object.keys(albums).sort((a, b) => parseInt(b) - parseInt(a));
+---
+
+<Layout title={ALBUMS.TITLE} description={ALBUMS.DESCRIPTION}>
+  <Container>
+    <aside data-pagefind-ignore>
+      <div class="p-8">
+        <div
+          class="container mx-auto grid max-w-(--breakpoint-sm) grid-cols-2 gap-8"
+        >
+          {
+            years.map((year) => (
+              <section class="animate space-y-4">
+                <div class="font-semibold text-black dark:text-white">
+                  {year}
+                </div>
+                <div>
+                  <ul class="not-prose flex flex-col gap-4">
+                    {albums[year].map((album) => (
+                    <PhotoCard entry={album} />
+                    ))}
+                  </ul>
+                </div>
+              </section>
+            ))
+          }
+        </div>
+      </div>
+    </aside>
+  </Container>
+</Layout>
