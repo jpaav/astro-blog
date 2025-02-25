@@ -4,6 +4,7 @@ import Layout from "@layouts/Layout.astro";
 import Container from "@components/Container.astro";
 import { getAlbumImages } from "@lib/utils";
 import { Image } from "astro:assets";
+import BackToPrevious from "@components/BackToPrevious.astro";
 
 export async function getStaticPaths() {
   const albums = (await getCollection("albums")).filter(
@@ -28,20 +29,24 @@ const images = await getAlbumImages(album.id);
 ---
 
 <Layout title={album.data.title} description={album.data.description}>
+  <h1 class="animate text-3xl font-semibold text-black dark:text-white text-center">{album.data.title}</h1>
   <div
-    class="container mx-auto my-8 sm:columns-2 md:columns-3 lg:columns-4 xl:columns-5"
+    class="animate container mx-auto my-8 sm:columns-2 md:columns-3 lg:columns-4 xl:columns-5"
   >
     {
       images.map((image) => (
         <Image
           src={image}
           alt={`Image from ${album.data.title} album`}
-          format="avif"
+          format="webp"
           quality={50}
           class="mb-4 rounded-sm border border-transparent transition-all duration-300 ease-in-out hover:border-gray-300 hover:shadow-lg"
           loading="lazy"
         />
       ))
     }
+  </div>
+  <Container class="animate mx-auto">
+    <BackToPrevious href="/albums">All albums</BackToPrevious>
   </div>
 </Layout>
