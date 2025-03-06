@@ -6,6 +6,7 @@ import PhotoCard from "@components/PhotoCard.astro";
 import Link from "@components/Link.astro";
 import { getCollection } from "astro:content";
 import type { CollectionEntry } from "astro:content";
+import WideContainer from "@components/WideContainer.astro";
 
 const blog = (await getCollection("blog"))
   .filter((post) => !post.data.draft)
