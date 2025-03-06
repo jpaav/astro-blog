@@ -6,6 +6,7 @@ import PhotoCard from "@components/PhotoCard.astro";
 import Link from "@components/Link.astro";
 import { getCollection } from "astro:content";
 import type { CollectionEntry } from "astro:content";
+import WideContainer from "@components/WideContainer.astro";
 
 const blog = (await getCollection("blog"))
   .filter((post) => !post.data.draft)
@@ -28,8 +29,8 @@ const albums: CollectionEntry<"albums">[] = (
 ---
 
 <Layout title={HOME.TITLE} description={HOME.DESCRIPTION}>
-  <Container>
-    <aside data-pagefind-ignore>
+  <aside data-pagefind-ignore>
+    <Container>
       <div class="space-y-16">
         <section class="animate space-y-6">
           <div class="flex flex-wrap items-center justify-between gap-y-2">
@@ -38,7 +39,7 @@ const albums: CollectionEntry<"albums">[] = (
             </h2>
             <Link href="/albums"> See all albums </Link>
           </div>
-          <ul class="not-prose flex flex-col gap-4">
+          <ul class="not-prose flex flex-col gap-4 items-center">
             {
               albums.map((album) => (
                 <li>
@@ -48,7 +49,6 @@ const albums: CollectionEntry<"albums">[] = (
             }
           </ul>
         </section>
-
         <section class="animate space-y-4">
           <h2 class="font-semibold text-black dark:text-white">
             Contact
@@ -84,6 +84,6 @@ const albums: CollectionEntry<"albums">[] = (
           </ul>
         </section>
       </div>
-    </aside>
-  </Container>
+    </Container>
+  </aside>
 </Layout>
