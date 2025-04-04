@@ -23,7 +23,7 @@ const albums: CollectionEntry<"albums">[] = (
   await getCollection("albums")
 )
   .filter((album) => !album.data.draft)
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .sort((a, b) => b.data.uploadDate.valueOf() - a.data.uploadDate.valueOf())
   .slice(0, SITE.NUM_ALBUMS_ON_HOMEPAGE);
 ---
 

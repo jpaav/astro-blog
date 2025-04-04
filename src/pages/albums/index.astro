@@ -4,18 +4,17 @@ import Layout from "@layouts/Layout.astro";
 import Container from "@components/Container.astro";
 import PhotoCard from "@components/PhotoCard.astro";
 import { ALBUMS } from "@consts";
-import { Image } from "astro:assets";
 
 const data = (await getCollection("albums"))
   .filter((album) => !album.data.draft)
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+  .sort((a, b) => b.data.uploadDate.valueOf() - a.data.uploadDate.valueOf());
 
 type Acc = {
   [year: string]: CollectionEntry<"albums">[];
 };
 
 const albums = data.reduce((acc: Acc, album) => {
-  const year = album.data.date.getFullYear().toString();
+  const year = album.data.uploadDate.getFullYear().toString();
   if (!acc[year]) {
     acc[year] = [];
   }
