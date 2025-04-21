@@ -31,18 +31,21 @@ const images = await getAlbumImages(album.id);
 <Layout title={album.data.title} description={album.data.description}>
   <h1 class="animate text-3xl font-semibold text-black dark:text-white text-center">{album.data.title}</h1>
   <div
-    class="animate container mx-auto my-8 sm:columns-2 md:columns-3 lg:columns-4 xl:columns-5"
+    id="gallery--album"
+    class="pswp-gallery animate container mx-auto my-8 sm:columns-2 md:columns-3 lg:columns-4 xl:columns-5"
   >
     {
       images.map((image) => (
-        <Image
-          src={image}
-          alt={`Image from ${album.data.title} album`}
-          format="webp"
-          quality={50}
-          class="mb-4 rounded-sm border border-transparent transition-all duration-300 ease-in-out hover:border-gray-300 hover:shadow-lg"
-          loading="lazy"
-        />
+        <a href={image.src} data-pswp-width={image.width} data-pswp-height={image.height} target="_blank">
+          <Image
+            src={image}
+            alt={`Image from ${album.data.title} album`}
+            format="webp"
+            quality="low"
+            class="mb-4 rounded-sm border border-transparent transition-all duration-300 ease-in-out hover:border-gray-300 hover:shadow-lg"
+            loading="lazy"
+          />
+        </a>
       ))
     }
   </div>
@@ -50,3 +53,23 @@ const images = await getAlbumImages(album.id);
     <BackToPrevious href="/albums">All albums</BackToPrevious>
   </div>
 </Layout>
+
+<script>
+  // Initialize Photoswipe
+  import PhotoSwipeLightbox from 'photoswipe/lightbox';
+  import 'photoswipe/style.css';
+
+  const lightbox = new PhotoSwipeLightbox({
+    gallery: '#gallery--album',
+    children: 'a',
+    pswpModule: () => import("photoswipe"),
+  });
+
+  // lightbox.init();
+
+  document.addEventListener(
+    'astro:page-load',
+    () => { if (lightbox) lightbox.init() },
+    { once: false },
+  );
+</script>
